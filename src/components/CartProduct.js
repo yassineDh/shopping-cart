@@ -18,7 +18,7 @@ function CartProduct(props) {
         <span>{product.category}</span>
       </div>
 
-      <div className="quantity-card-product">
+      <div className="quantity-card-product" style={{ marginLeft: "auto"}}>
         <input type="text" name="name" value={product.quantity} disabled />
       </div>
 
