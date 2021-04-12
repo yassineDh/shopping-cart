@@ -1,11 +1,17 @@
-import React from 'react'
+import React from "react";
+import CartProduct from "./CartProduct";
+import { useDispatch, useSelector } from "react-redux";
 
 function ShopPage() {
-    return (
-        <div>
-            shop page
-        </div>
-    )
+  const dispatch = useDispatch();
+  const cartProductsData = useSelector((state) => state.cartProducts);
+  return (
+    <div className="shopping-cart">
+      {cartProductsData.map((cartProduct) => 
+        <CartProduct product={cartProduct} key={cartProduct.id} />
+      )}
+    </div>
+  );
 }
 
-export default ShopPage
+export default ShopPage;

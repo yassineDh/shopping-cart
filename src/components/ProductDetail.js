@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/actions/action";
 // import "./ProductDetail.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +9,11 @@ function ProductDetail(props) {
   let { id } = useParams();
 
   const [product, setproduct] = useState({});
+
+  const [quantity, setquantity] = useState(1);
+
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state);
 
   useEffect(() => {
     axios.get(`https://fakestoreapi.com/products/${id}`).then((res) => {
@@ -50,13 +57,25 @@ function ProductDetail(props) {
             </h6>
             <div className="d-inline-flex">
               <div>
-                <button type="button" class="btn btn-dark">
+                <button
+                  type="button"
+                  className="btn btn-dark"
+                  onClick={() => setquantity((preState) => preState + 1)}
+                >
                   +
                 </button>
               </div>
-              <input value="1" />
+              <input
+                value={quantity}
+                onChange={(e) => setquantity(e.target.value)}
+                type="number"
+              />
               <div>
-                <button type="button" class="btn btn-dark">
+                <button
+                  type="button"
+                  className="btn btn-dark"
+                  onClick={() => setquantity((preState) => preState - 1)}
+                >
                   -
                 </button>
               </div>
@@ -64,7 +83,15 @@ function ProductDetail(props) {
           </div>
 
           <div style={{ paddingBottom: 20 + "px" }}>
-            <button className="btn btn-success">Submit order</button>
+            <button
+              className="btn btn-success"
+              onClick={() => {
+                dispatch(addToCart({...product,quantity}));
+                console.log("test");
+              }}
+            >
+              Submit order
+            </button>
           </div>
         </div>
       </div>
